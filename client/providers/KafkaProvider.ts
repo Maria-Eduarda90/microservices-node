@@ -2,20 +2,18 @@ import { ApplicationContract } from '@ioc:Adonis/Core/Application'
 import { kafka } from 'Config/kafka';
 import { Kafka } from 'kafkajs'
 
-export default class KafkaSendMessage {
-  constructor(protected app: ApplicationContract) {}
+export default class KafkaProvider {
+  constructor(protected app: Kafka) {}
 
   public async register(topic: string, payload: any): Promise<void> {
-      const producer = kafka.producer({
-        allowAutoTopicCreation: true,
-      })
+      const producer = kafka.producer()
 
       console.log('producer: ', producer)
 
-      producer.connect()
+      await producer.connect()
       console.log(`MESSAGE SENT TO TOPIC ${topic}`)
       console.log(payload)
-      producer.send({
+      await producer.send({
         topic,
         messages: [
           {
@@ -24,7 +22,7 @@ export default class KafkaSendMessage {
         ],
       })
 
-      producer.disconnect()
+      await producer.disconnect()
     
   }
 }

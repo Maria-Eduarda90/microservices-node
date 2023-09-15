@@ -1,9 +1,9 @@
 import Client from "App/Models/Client";
-import KafkaSendMessage from "Providers/KafkaProvider";
+import KafkaProvider from 'Providers/KafkaProvider'
 
 export default class CreateClientServices {
-  constructor(private kafkaProducer: KafkaSendMessage) {}
-  
+  constructor(private kafkaProducer: KafkaProvider) {}
+
   public async customerRegister(data: CreateClientRequestType) {
     try {
       const email = await Client.findBy('email', data.email)
@@ -23,8 +23,8 @@ export default class CreateClientServices {
 
     try {
       this.kafkaProducer.register('CUSTOMER_CREATED', customerUser)
-    } catch (err) { 
-      console.log('error: ', err) 
+    } catch (err) {
+      console.log('error: ', err)
     }
 
     return customerUser

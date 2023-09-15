@@ -1,9 +1,9 @@
 import type { HttpContextContract } from '@ioc:Adonis/Core/HttpContext';
 import CreateClientServices from 'App/Services/CreateClientService';
-import KafkaSendMessage from 'Providers/KafkaProvider';
+import KafkaProvider from 'Providers/KafkaProvider';
 
 export default class CreateClientController {
-  constructor(private kafkaProducer: KafkaSendMessage) {}
+  constructor(private kafkaProducer: KafkaProvider) {}
   public async handle({ request, response }: HttpContextContract) {
     
     const useCase = new CreateClientServices(this.kafkaProducer)
