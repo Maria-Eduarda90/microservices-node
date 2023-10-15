@@ -6,7 +6,7 @@ export async function  createCustomerConsumer(){
     await consumer.run({
         eachMessage: async ({ message }) => {
             const messageToString = message.value?.toString();
-            console.log(messageToString);
+            console.log("messageToString: ", messageToString);
         }
     });
 }
