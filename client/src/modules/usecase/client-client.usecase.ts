@@ -1,4 +1,5 @@
 import { prismaClient } from "../../config/prisma/prismaClient";
+import { KafkaSendMessage } from "../../provider/kafka/producer";
 
 export class CreateClientUseCase {
   constructor() {}
@@ -13,10 +14,13 @@ export class CreateClientUseCase {
     if(customer) throw new Error("Esse email já existe").message;
 
     const customerCreated = await prismaClient.client.create({
-        data: {
-            ...data
-        }
+      data: {
+        ...data
+      }
     });
+
+    const kafkaprovider = new KafkaSendMessage();
+    await kafkaprovider.execute('CUSTOMER_CREATED', customerCreated);
 
     return customerCreated;
   }
