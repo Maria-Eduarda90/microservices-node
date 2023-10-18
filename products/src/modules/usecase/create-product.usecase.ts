@@ -2,6 +2,7 @@ import { prismaClient } from "../../config/prisma/prismaClient";
 import { CreateProductType } from "../@types/CreateProductType";
 
 export class CreateProductUseCase {
+  
   constructor() {}
 
   async execute(data: CreateProductType){
