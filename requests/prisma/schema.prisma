@@ -34,6 +34,7 @@ model Order {
   createdAt   DateTime @default(now())
   customerId  String
   OrderItems  OrderItems[]
+  status      String
   
   @@map("orders")
 }
